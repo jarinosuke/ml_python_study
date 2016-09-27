@@ -29,4 +29,19 @@ plt.ylabel('petal length [cm]')
 # 凡例の設定
 plt.legend(loc='upper left')
 # 図の表示
+# plt.show()
+
+
+from perceptron import *
+# パーセプトロンのオブジェクトの生成
+ppn = Perceptron(eta=0.1, n_iter=10)
+# トレーニングデータをモデルへ適合
+ppn.fit(X, y)
+# epocと誤分類誤差の関係の折れ線グラフをプロット
+plt.plot(range(1, len(ppn.errors_) + 1), ppn.errors_, marker='o')
+# 軸のラベルの設定
+plt.xlabel('Epochs')
+plt.ylabel('Number of misclassifications')
+# 図の表示
 plt.show()
+
