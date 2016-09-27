@@ -45,7 +45,7 @@ class Perceptron(object):
         """
 
         self.w_ = np.zeros(1 + X.shape[1])
-        self.errors = []
+        self.errors_ = []
 
         for _ in range(self.n_iter):
             errors = 0
