@@ -73,3 +73,43 @@ class Perceptron(object):
         return np.where(self.net_input(X) >= 0.0, 1, -1)
 
 
+import pandas as pd
+
+df = pd.read_csv('https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data', header=None)
+df.tail()
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 1-100行目の目的編集の抽出
+y = df.iloc[0:100, 4].values
+
+# Iris-setosaを-1、Iris-virginicaを1にする
+y = np.where(y == 'Iris-setosa', -1, 1)
+
+# 1-100行目のの1,3列目の抽出
+X = df.iloc[0:100, [0, 2]].values
+
+# 品種 setosa のプロット
+plt.scatter(X[:50, 0], X[:50, 1], color='red', marker='o', label='setosa')
+
+# 品種 virginica のプロット
+plt.scatter(X[50:100, 0], X[50:100, 1], color='blue', marker='x', label='versicolor')
+
+# 軸ラベルの設定
+plt.xlabel('sepal length[cm]')
+plt.ylabel('petal length[cm]')
+
+plt.legend(loc='upper left')
+
+plt.show()
+
+# パーセプトロン作成
+ppn = Perceptron(eta=0.1, n_iter=10)
+ppn.fit(X, y)
+# エポックとご分類誤差の関係折れ線グラフをプロット
+plt.plot(range(1, len(ppn.errors_) + 1), ppn.errors_, marker='o')
+# 軸のラベルの設定
+plt.xlabel('Epochs')
+plt.ylabel('Number of misclassifications')
+plt.show()
